@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :invoice_materials
+  resources :materials
+  resources :invoices
+  resources :user_customers
+  resources :customers
+  resources :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get "/hello", to: "application#hello_world"
 
