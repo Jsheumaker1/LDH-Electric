@@ -1,28 +1,42 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
-import { render } from '@headlessui/react/dist/utils/render'
+import Customers from "./Customers"
+  import Account from "./Account"
+import Login from "./Login"
+import { useHistory } from "react-router-dom";
 
 export default function Home(login, setUser, customerInfo) {
+
+  const history = useHistory()
   const user = {
     name: setUser.name,
     }
+
   const navigation = [
     { name: 'Customers', href: '#Customers', current: true },
     { name: 'Inventory', href: '#Inventory', current: false },
     { name: 'Outstanding Invoices', href: '#OutstandingInvoices', current: false },
   ]
   const userNavigation = [
-    { name: 'Your Account', href: '/Account' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Your Account', component: <Account/> },
+    { name: 'Sign out', component: <Login/> },
   ]
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
-    render() (
+  const handleUserLogOut = (e) => {
+      e.preventDefault();
+      fetch('/login', {
+      method: "DELETE"  
+    })
+      login(false)
+    };
+
+
+    return (
       <>
         <div className="min-h-full">
           <Disclosure as="nav" className="bg-gray-800">
@@ -86,11 +100,33 @@ export default function Home(login, setUser, customerInfo) {
                             leaveTo="transform opacity-0 scale-95"
                           >
                             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a onClick={()=>history.push('/account')}
+                                    // href="/account"
+                                    className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                  >
+                                    Your Profile
+                                  </a>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a  onClick={handleUserLogOut}
+                                    href="/login"
+                                    className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                  >
+                                    Sign out
+                                  </a>
+                                )}
+                              </Menu.Item>
+                            </Menu.Items>
+                            {/* <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                               {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                   {({ active }) => (
                                     <a
-                                      href={item.href}
+                                      component={item.component}
                                       className={classNames(
                                         active ? 'bg-gray-100' : '',
                                         'block px-4 py-2 text-sm text-gray-700'
@@ -101,7 +137,7 @@ export default function Home(login, setUser, customerInfo) {
                                   )}
                                 </Menu.Item>
                               ))}
-                            </Menu.Items>
+                            </Menu.Items> */}
                           </Transition>
                         </Menu>
                       </div>
@@ -171,10 +207,27 @@ export default function Home(login, setUser, customerInfo) {
               </>
             )}
           </Disclosure>
+
+          <div>
+              <a>
+              <header className="bg-white shadow">
+                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                  <h1 className="text-3xl font-bold text-gray-900">Customers</h1>
+                </div>
+              </header>
+              <main>
+                <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                 
+                <Customers setUser={setUser}/>
+                  
+                </div>
+              </main>
+              </a>
+          </div>
+          
           
           {/* {navigation.map((item) => ({
-            const :page=(item.current),
-            if(page) {return ( 
+            if() {return ( 
             <div>
               <a>
               <header className="bg-white shadow">

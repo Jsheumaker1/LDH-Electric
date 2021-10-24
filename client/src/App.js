@@ -6,6 +6,7 @@ import CustomerInvoices from "./components/CustomerInvoices"
 import Signup from "./components/Signup"
 import Home from "./components/Home"
 import Account from "./components/Account"
+import NewCustomer from "./components/NewCustomer"
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
             <Route path="/login" component={()=><Login login = {setLogin} setUser={setUser} setCurrentUser={setCurrentUser} />} />
             <Route path='/home' component={() =><Home user = {setUser} login = {setLogin} currentUser={setCurrentUser}  />}/>
             <Route path='/account' component={() =><Account login = {setLogin} user={user}  setUser = {setUser} />}/>
+            <Route path='/newcustomer' component={() =><NewCustomer login = {setLogin} user={user}  setUser = {setUser} />}/>
             <Route path='/customerinvoices' component={()=><CustomerInvoices />}/>
             <Route path='/' component={()=><Login login = {setLogin} setUser={setUser}/>} />
           </Switch>

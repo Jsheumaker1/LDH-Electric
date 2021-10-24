@@ -2,12 +2,16 @@ import React, {useState, useEffect} from 'react';
 // import { Redirect } from 'react-router-dom';
 // import CustomerInvoices from "./CustomerInvoices"
 import { useHistory } from "react-router-dom";
+import { LockClosedIcon } from '@heroicons/react/solid'
+import NewCustomer from "./NewCustomer"
 
 
-export default function Customers(){
+
+export default function Customers(setUser){
 
     const history = useHistory()
     const [customerInfo, setCustomerInfo] = useState([])
+
 
     useEffect(()=>{
         fetch('/customers')
@@ -51,6 +55,7 @@ export default function Customers(){
                                 <span className="sr-only">View Invoices</span>
                                 </th>
                                 <th scope="col" className="relative px-6 py-3">
+                                    <button onClick={()=>history.push('/newcustomer')} value="button" class="px-4 py-2 rounded bg-blue-400 text-white hover:bg-blue-700 my-4 w-full" id="whoobe-ibemp">Add Customer</button>
                                 <span className="sr-only">Edit</span>
                                 </th>
                             </tr>

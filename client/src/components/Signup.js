@@ -26,7 +26,6 @@ export default function SignUp ({login, users, setCurrentUser }) {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        console.log('submit')
         const newForm = {
             name: formData.name,
             username: formData.username,
@@ -113,5 +112,6 @@ export default function SignUp ({login, users, setCurrentUser }) {
 
     )
 }
+
 
 
