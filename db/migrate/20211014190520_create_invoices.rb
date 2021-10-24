@@ -4,7 +4,7 @@ class CreateInvoices < ActiveRecord::Migration[6.1]
       t.belongs_to :customer, null: false, foreign_key: true
       t.integer :invoice_number
       t.string :date
-      t.text :decription
+      t.text :description
       t.integer :subtotal
       t.integer :tax
       t.integer :grand_total

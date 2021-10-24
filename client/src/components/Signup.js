@@ -3,9 +3,10 @@ import '../App.css';
 import '../index.css'
 import 'reactjs-popup/dist/index.css';
 import { useHistory } from "react-router-dom";
+import { LockClosedIcon } from '@heroicons/react/solid'
 
 
-function SignUp ({login, users, setCurrentUser }) {
+export default function SignUp ({login, users, setCurrentUser }) {
 
     const history = useHistory();  
 
@@ -25,6 +26,7 @@ function SignUp ({login, users, setCurrentUser }) {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
+        console.log('submit')
         const newForm = {
             name: formData.name,
             username: formData.username,
@@ -32,7 +34,7 @@ function SignUp ({login, users, setCurrentUser }) {
             password: formData.password
         }
         
-        fetch('http://localhost:3000/signup', {
+        fetch('/signup', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -47,7 +49,7 @@ function SignUp ({login, users, setCurrentUser }) {
               else
                 {login (true)
                 setCurrentUser([...users, data]);
-                history.push('/sign-in')}
+                history.push('/home')}
 
               })
             
@@ -57,59 +59,59 @@ function SignUp ({login, users, setCurrentUser }) {
 
     return (
         <>
-
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
-            <div className="px-4 sm:px-0">
-            
-                <p className="mt-1 text-sm text-gray-600"></p>
-                </div>
-            </div>
-            <div className="mt-5 md:mt-0 md:col-span-2">
-                <form >
-                    <div className="shadow overflow-hidden sm:rounded-md">
-                        <div className="px-5 py-6 bg-white sm:p-7">
-                        <h3 className="p-7 text-2xl font-medium leading-6 text-gray-900">Account Information</h3>
-                            <div className="grid grid-cols-4  gap-8">
-                                <div className="col-span-10 sm:col-span-6">
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                                    <input onChange={handleSignup} value={formData.name} type="text" name="name" id="name" autoComplete="name" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                                </div>
-
-                                <div className="col-span-8 sm:col-span-6">
-                                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
-                                    <input onChange={handleSignup} value={formData.username} type="text" name="username" id="username" autoComplete="username" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                                </div>
-
-                                <div className="col-span-8 sm:col-span-6">
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-                                    <input onChange={handleSignup} value={formData.email} type="text" name="email" id="email" autoComplete="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                                </div>
-
-                                <div className="col-span-8 sm:col-span-6">
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                                    <input onChange={handleSignup} value={formData.password} type="password" name="password" id="password" autoComplete="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                            <button onSubmit={handleSubmit}  type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Save
-                            </button>
-                        </div>
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-md w-full space-y-8">
+                    <div>
+                    <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">💡 New Account Information 💡</h2>
                     </div>
-                </form>
-            </div>
-        </div>
+                    <form className="mt-8 space-y-6"  onSubmit={handleSubmit} >
+                        <input type="hidden" name="remember" defaultValue="true" />
+                        <div className="rounded-md shadow-sm -space-y-px">
+                        <div>
+                            <label htmlFor="name" className="sr-only">
+                            Name
+                            </label>
+                            <input onChange={handleSignup} value={formData.name} id="name" name="name" type="name" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Name"/>
+                        </div>
+                        <div>
+                            <label htmlFor="username" className="sr-only">
+                            Username
+                            </label>
+                            <input onChange={handleSignup} value={formData.username} id="username" name="username" type="username" autoComplete="username" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" />
+                        </div>
+                        <div>
+                            <label htmlFor="email" className="sr-only">
+                            Email
+                            </label>
+                            <input onChange={handleSignup} value={formData.email} id="email" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email" />
+                        </div>
+                        <div>
+                            <label htmlFor="password" className="sr-only">
+                            Password
+                            </label>
+                            <input onChange={handleSignup} value={formData.password} id="password" name="password" type="password" autoComplete="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
+                        </div>
+                        </div>
 
-        <div className="hidden sm:block" aria-hidden="true">
-        <div className="py-5">
-            <div className="border-t border-gray-200" />
-        </div>
-        </div>
-    </>
+
+                        <div>
+                        <button  type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                            </span>
+                            Create User
+                        </button>
+                        </div>
+                    </form>
+                </div>        
+            </div>
+
+    
+    
+    
+        </>
 
     )
 }
 
-export default SignUp
+

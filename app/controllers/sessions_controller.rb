@@ -3,12 +3,10 @@ class SessionsController < ApplicationController
     # Login >>>>
     # POST /login
     def create
-        
 
         user_to_login = User.find_by_username(params[:username])
 
-        if user_to_login
-
+        if user_to_login&.authenticate(params[:password])
             session[:user_id] = user_to_login.id
             render json: user_to_login
 

@@ -1,5 +1,5 @@
-import { PaperClipIcon } from '@heroicons/react/solid'
-import React, {useState, useEffect} from 'react';
+// import { PaperClipIcon } from '@heroicons/react/solid'
+import React, {useState} from 'react';
 import { LockClosedIcon } from '@heroicons/react/solid'
 
 
@@ -17,7 +17,7 @@ function Account( {login, user, setUser} ) {
     const handleDelete = () =>{
         console.log(user.id)
         if (window.confirm("Are you sure you want to delete this account?"))
-        fetch(`http://localhost:3000/users/${user.id}`, {
+        fetch(`/users/${user.id}`, {
           method: 'DELETE'},
           login(false))}
 

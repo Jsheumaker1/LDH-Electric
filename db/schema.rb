@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2021_10_14_190554) do
     t.bigint "customer_id", null: false
     t.integer "invoice_number"
     t.string "date"
-    t.text "decription"
+    t.text "description"
     t.integer "subtotal"
     t.integer "tax"
     t.integer "grand_total"
