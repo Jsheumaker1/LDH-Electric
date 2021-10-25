@@ -71,7 +71,7 @@ export default function SignUp ({login, users, setCurrentUser }) {
                             Name
                             </label>
                             <input onChange={handleSignup} value={formData.name} id="name" name="name" type="name" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Name"/>
-                        </div>
+                        </div>  
                         <div>
                             <label htmlFor="username" className="sr-only">
                             Username

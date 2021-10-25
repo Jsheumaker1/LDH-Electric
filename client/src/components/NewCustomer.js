@@ -5,7 +5,8 @@ import 'reactjs-popup/dist/index.css';
 import { useHistory } from "react-router-dom";
 
 
-function NewCustomer ({login, setUser,  setCurrentUser }) {
+function NewCustomer ({user }) {
+    console.log(user)
 
     const history = useHistory();  
     const [currentCustomers, setCurrentCustomers]= useState([])
@@ -27,10 +28,10 @@ function NewCustomer ({login, setUser,  setCurrentUser }) {
     const handleCustomerSubmit = (e) =>{
         e.preventDefault()
         const newCustomer = {
-            user_id: setUser.id,
-            name: customerData.customer_name,
-            username: customerData.phone,
-            email: customerData.address,
+            user_id: user.id,
+            customer_name: customerData.customer_name,
+            phone: customerData.phone,
+            address: customerData.address,
             balance: customerData.balance
             }
         
@@ -40,7 +41,7 @@ function NewCustomer ({login, setUser,  setCurrentUser }) {
               'Content-Type': 'application/json',
               Accept: 'application/json'
             },
-            body: JSON.stringify(newCustomer)
+            body: JSON.stringify(newCustomer)   
               })
               .then(res=>res.json())
               .then(data=>console.log(newCustomer))          
