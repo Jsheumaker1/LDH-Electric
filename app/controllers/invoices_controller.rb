@@ -4,7 +4,7 @@ class InvoicesController < ApplicationController
 
     # GET /invoices/:id
     def customer_invoices 
-        invoices = Invoice.find_by(customer_id: params[:id])
-        render json: [invoices]
+        invoices = Invoice.where(customer_id: params[:id])
+        render json: invoices
     end
 end

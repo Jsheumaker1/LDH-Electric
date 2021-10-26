@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { LockClosedIcon } from '@heroicons/react/solid'
 
 
-export default function SignUp ({login, users, setCurrentUser }) {
+export default function SignUp ({login, users, setUser }) {
 
     const history = useHistory();  
 
@@ -46,10 +46,9 @@ export default function SignUp ({login, users, setCurrentUser }) {
               if (data.error){
                   alert (data.error)}
               else
-                {login (true)
-                setCurrentUser([...users, data]);
-                history.push('/home')}
-
+                {login(true)
+                setUser(data)
+                history.push('/Home')}
               })
             
     }

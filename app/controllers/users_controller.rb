@@ -20,6 +20,7 @@ class UsersController < ApplicationController
 
         if newUser.save
             render json:newUser
+            session[:user_id] = newUser.id
         else
             render json: {errors: newUser.errors.full_messages}
         end
@@ -27,13 +28,20 @@ class UsersController < ApplicationController
 
    # PATCH/PUT /users/:id
     def update
-        if @user.update(user_params)
+        @user = User.find(params[:id])
+        
+        if @user
             render json: @user
         else
             render json: @user.errors, status: :unprocessable_entity
         end
     end
 
+    # DELETE /users/:id
+    def destroy 
+        user = User.find(params[:id])
+        user.destroy
+    end
 
     private
 
@@ -41,6 +49,11 @@ class UsersController < ApplicationController
         def user_params
             params.permit(:name, :username, :email, :password)
         end 
+
+        def update_user_params
+            params[:updatedUser].permit(:name, :username, :email, :password)
+        
+        end
         
 
 end

@@ -44,7 +44,7 @@ function NewCustomer ({user }) {
             body: JSON.stringify(newCustomer)   
               })
               .then(res=>res.json())
-              .then(data=>console.log(newCustomer))          
+              .then(data=> history.push('/home'))          
     }
 
 

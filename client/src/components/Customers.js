@@ -7,7 +7,9 @@ import NewCustomer from "./NewCustomer"
 
 
 
-export default function Customers(setUser){
+export default function Customers({user}){
+
+    
 
     const history = useHistory()
     const [customerInfo, setCustomerInfo] = useState([])
@@ -63,17 +65,7 @@ export default function Customers(setUser){
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {customerInfo.map((customer) => { return(
                                 <tr key={customer.id}>
-                                {/* <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="flex items-center">
-                                    <div className="flex-shrink-0 h-10 w-10">
-                                        <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
-                                    </div>
-                                    <div className="ml-4">
-                                        <div className="text-left text-sm font-medium text-gray-900">{jobs.customer}</div>
-                                        <div className="text-left text-sm text-gray-500">{jobs.address}</div>
-                                    </div>
-                                    </div>
-                                </td> */}
+                
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="text-left text-sm font-medium text-gray-900">{customer.customer_name}</div>
                                     <div className="text-left text-sm text-gray-500">{customer.address}</div>

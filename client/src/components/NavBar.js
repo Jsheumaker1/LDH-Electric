@@ -5,12 +5,11 @@ import Customers from "./Customers"
 import Account from "./Account"
 import Login from "./Login"
 import { useHistory } from "react-router-dom";
-import NavBar from "./NavBar"
 
-export default function Home( user) {
+export default function NavBar(login, user) {
 
   const history = useHistory()
-  const currentUser = {
+  const currentUser = { 
     name: user.name,
     }
 
@@ -31,8 +30,10 @@ export default function Home( user) {
   const handleUserLogOut = (e) => {
       e.preventDefault();
       fetch('/login', {
-      method: "DELETE"},
-      history.push('/Login'))}
+      method: "DELETE"  
+    })
+      login(false)
+    };
 
 
     return (

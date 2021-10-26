@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   delete '/login', to: 'sessions#destroy'
   delete '/users/:id', to: 'users#destroy'
   get '/users/:id', to: 'users#userid'
+  patch 'users/:id', to: 'users#update'
   get '/invoices/:id', to: 'invoices#customer_invoices'
   post '/customers', to: 'customers#create'
   

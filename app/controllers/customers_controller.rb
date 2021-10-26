@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
 
     def create
         customer = Customer.new(customer_params)
-        byebug
+          
         if customer.save
           render json: customer, status: :created
         else
