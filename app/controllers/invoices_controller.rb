@@ -7,4 +7,5 @@ class InvoicesController < ApplicationController
         invoices = Invoice.where(customer_id: params[:id])
         render json: invoices
     end
+
 end

@@ -1,109 +1,110 @@
 import { LockClosedIcon } from '@heroicons/react/solid'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useRef, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useHistory } from "react-router-dom";
+import { ExclamationIcon } from '@heroicons/react/outline'
+import { useLocation } from "react-router-dom";
 
 
-function Account( {login, user, setUser} ) {  
-
-    const [open, setOpen] = useState(false)
-    const cancelButtonRef = useRef(null)
+function CustomerInfo({}) { 
+  
+    const location = useLocation();
+    const customerInfo = location.state
+    const cancelButton = useRef(null)
     const history = useHistory(); 
+    const [openModal, setOpenModal] = useState(false)
+    const [customer, setCustomer] = useState(customerInfo)
 
-    const [userForm, setUserForm] = useState({
-        name: user.name,
-        username: user.username,
-        email: user.email,
-        password: user.password_digest
+    console.log(customer)
+    
+    const [customerForm, setCustomerForm] = useState({
+        customer_name: customer.customer_name,
+        phone: customer.phone,
+        address: customer.address,
       })
     
-    const [updateInfo, setUpdateInfo] = useState({
-        name: '',
-        username: '',
-        email: '',
-        password: ''
+
+    const [updateCustomer, setUpdateCustomer] = useState({
+        customer_name: '',
+        phone: '',
+        address: '',
+        
       })
 
-    const handleDelete = () =>{
-        if (window.confirm("Are you sure you want to delete this account?"))
-          fetch(`/users/${user.id}`, {
-            method: 'DELETE'},
-            login(false))}
-
-    const handleEdit = (e) => {
-      const name = e.target.name
-        const value = e.target.value
-        setUpdateInfo({
-            [name]:value
+    const handleCustomerEdit = (e) => {
+        const name = e.target.name
+          const value = e.target.value
+          setUpdateCustomer({
+              [name]:value
+          })
+      }
+  
+      const postCustomerEdit = (e) => {
+        e.preventDefault()
+  
+        const updatedCustomer={
+            customer_name: updateCustomer.customer_name,
+            phone: updateCustomer.phone,
+            address: updateCustomer.address,
+        }
+  
+        fetch(`/customers/${customer.id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({updatedCustomer})
+        })
+        .then(res => res.json())
+        .then((postUpdatedCustomer) => {
+          setCustomer(postUpdatedCustomer)
+          history.push('/Home')         
         })
     }
 
-    const postEdit = (e) => {
-      e.preventDefault()
-
-      const updatedUser={
-        name: updateInfo.name,
-        username: updateInfo.username,
-        email: updateInfo.email,
-        password: updateInfo.password
-      }
-
-      fetch(`/users/${user.id}`, {
-      method: "PATCH",
-      headers: {
-          "Content-type": "application/json"
-      },
-      body: JSON.stringify({updatedUser})
-      })
-      .then(res => res.json())
-      .then((updatedPost) => {
-        setUser(updatedPost)          
-      })
-  }
-    
+    const handleCustomerDelete = () =>{
+      if (window.confirm("Are you sure you want to delete this customer?"))
+        fetch(`/customers/${customer.id}`, {
+          method: 'DELETE'},
+          history.push('/Home'))}
 
     return (
-            
+
         <div className="border-t border-gray-200 bg-white shadow overflow-hidden sm:rounded-lg ">
             {/* {setUser.map((user) => { return(                
                 <dr key={user.id}> */}
           <div className="px-4 pt-5 sm:px-6">
-            <h3 className="text-lg font-medium leading-6 text-gray-900 bg-white shadow overflow-hidden sm:rounded-lg p-5">Account Information</h3>
+            <h3 className="text-lg font-medium leading-6 text-gray-900 bg-white shadow overflow-hidden sm:rounded-lg p-5">Customer Information</h3>
           </div>
           <div className="px-4 py-5 sm:px-6 ">
             <div className="border-t border-gray-200 bg-white shadow overflow-hidden sm:rounded-lg">
               <dl>
               <form className="mt-8 space-y-6" >
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Full Name</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{userForm.name}</dd>
+                  <dt className="text-sm font-medium text-gray-500">Customer Name</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{customerForm.customer_name}</dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">User Name</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{userForm.username}</dd>
+                  <dt className="text-sm font-medium text-gray-500">Address</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{customerForm.address}</dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Email address</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{userForm.email}</dd>
+                  <dt className="text-sm font-medium text-gray-500">Phone</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{customerForm.phone}</dd>
                 </div>
-                <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Password</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"  type="password">{(userForm.password)}</dd>
-                  {/* <br/> */}
-                  {/* <button className="mt-1 text-xs text-gray-900 sm:mt-0 sm:grid-cols-3 sm:col-span-1" onClick={() => setIsRevealPwd(!isRevealPwd)} type="submit">Show Password</button> */}
-                </div>
+    
                 <div className=" place-items-end bg-white px-4 py-5 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-6">
                   <div>
                   <div className="text-sm font-medium text-gray-500"> </div>
-                  <button onClick={() => setOpen(true)} type="button" className="place-items-end order-last group relative flex justify-center py-2 px-10 border-10 border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button onClick={() => setOpenModal(true)} type="button" className="place-items-end order-last group relative flex justify-center py-2 px-10 border-10 border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                       <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                       </span>
-                      Edit Account
+                      Edit Customer
                   </button>
                   </div>
-                  <Transition.Root show={open} as={Fragment}>
-                    <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setOpen}>
+                  <Transition.Root show={openModal} as={Fragment}>
+                    <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButton} onClose={setOpenModal}>
                       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                         <Transition.Child
                           as={Fragment}
@@ -136,59 +137,46 @@ function Account( {login, user, setUser} ) {
                               <div className="mt-10 sm:mt-0">
                                 <div className="md:grid md:grid-cols-1 md:gap-6">                              
                                   <div className="mt-5 md:mt-0 md:col-span-2">
-                                    <form action="#" method="PATCH" onSubmit={postEdit}>
+                                    <form action="#" method="PATCH" onSubmit={postCustomerEdit}>
                                       <div className="shadow overflow-hidden sm:rounded-md">
                                         <div className="px-4 py-5 bg-white sm:p-6">
                                           <div className="border-t border-gray-200 rounded-lg">
                                             
                                           <div className=" rounded-lg bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                              <dt className="text-sm font-medium text-gray-500">Name</dt>
+                                              <dt className="text-sm font-medium text-gray-500">Customer Name</dt>
                                               <input className="outline-black rounded-sm mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
-                                                onChange={handleEdit}
+                                                onChange={handleCustomerEdit}
                                                 type="text"
-                                                name="name"
-                                                id="name"
-                                                autoComplete="name"
-                                                placeholder={userForm.name}
+                                                name="customer_name"
+                                                id="customer_name"
+                                                autoComplete="customer_name"
+                                                placeholder={customerForm.customer_name}
                                                 ></input>
                                             </div>  
 
                                             <div className=" rounded-lg bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                              <dt className="text-sm font-medium text-gray-500">Username</dt>
+                                              <dt className="text-sm font-medium text-gray-500">Address</dt>
                                               <input className="outline-black rounded-sm mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
-                                                onChange={handleEdit}
+                                                onChange={handleCustomerEdit}
                                                 type="text"
-                                                name="username"
-                                                id="username"
-                                                autoComplete="username"
-                                                placeholder={userForm.username}
+                                                name="phone"
+                                                id="phone"
+                                                autoComplete="phone"
+                                                placeholder={customerForm.phone}
                                                 ></input>
                                             </div> 
                                              
                                             <div className=" rounded-lg bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                              <dt className="text-sm font-medium text-gray-500">Email Address</dt>
+                                              <dt className="text-sm font-medium text-gray-500">Phone</dt>
                                               <input className="outline-black rounded-sm mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"                                              
-                                                onChange={handleEdit}
+                                                onChange={handleCustomerEdit}
                                                 type="text"
-                                                name="email"
-                                                id="email"
-                                                autoComplete="email"
-                                                placeholder={userForm.email}
+                                                name="address"
+                                                id="address"
+                                                autoComplete="address"
+                                                placeholder={customerForm.address}
                                                 ></input>
-                                            </div> 
-
-                                            <div className=" rounded-lg bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                              <dt className="text-sm font-medium text-gray-500">Password</dt>
-                                              <input className="outline-black rounded-sm mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
-                                                onChange={handleEdit}
-                                                type="password"
-                                                name="passsword"
-                                                id="passsword"
-                                                autoComplete="passsword"
-                                                placeholder={userForm.password}
-                                                ></input>
-                                            </div> 
-
+                                            </div>            
                                           </div>
                                         </div>
                                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -211,8 +199,8 @@ function Account( {login, user, setUser} ) {
                               <button
                                 type="button"
                                 className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                onClick={() => setOpen(false)}
-                                ref={cancelButtonRef}
+                                onClick={() => setOpenModal(false)}
+                                ref={cancelButton}
                               >
                                 Cancel
                               </button>
@@ -229,11 +217,11 @@ function Account( {login, user, setUser} ) {
         </div>
             <div className="px-4 py-5 sm:px-6">
               
-                  <button onClick={handleDelete} type="submit" className="group relative flex justify-center py-2 px-10 border-10 border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button onClick={handleCustomerDelete} type="submit" className="group relative flex justify-center py-2 px-10 border-10 border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       <span className="inset-y-0 flex items-center pl-3">
                       <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                       </span>
-                      Delete Account
+                      Delete Customer
                   </button>
                 
               </div>
@@ -241,6 +229,8 @@ function Account( {login, user, setUser} ) {
         )})} */}
       </div>
       )
-  }
+  
+    
+}
 
-export default Account;
+export default CustomerInfo;

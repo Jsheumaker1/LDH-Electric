@@ -4,15 +4,16 @@ import React, {useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
 import { LockClosedIcon } from '@heroicons/react/solid'
 import NewCustomer from "./NewCustomer"
+import CustomerInfo from "./CustomerInfo"
 
 
 
 export default function Customers({user}){
 
-    
-
     const history = useHistory()
     const [customerInfo, setCustomerInfo] = useState([])
+    const [openModal, setOpenModal] = useState(false)
+    const handleSetOpenModal = () => setOpenModal(!openModal)
 
 
     useEffect(()=>{
@@ -31,19 +32,19 @@ export default function Customers({user}){
                             <tr>
                                 <th
                                 scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                className="px-6 py-3 text-left text-base font-medium text-gray-900 uppercase tracking-wider"
                                 >
                                 Customer Information
                                 </th>
                                 <th
                                 scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                className="px-6 py-3 text-left text-base font-medium text-gray-900 uppercase tracking-wider"
                                 >
                                 Description
                                 </th>
                                 <th
                                 scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                className="px-6 py-3 text-left text-base font-medium text-gray-900 uppercase tracking-wider"
                                 >
                                 Balance
                                 </th>
@@ -54,11 +55,11 @@ export default function Customers({user}){
                                 Grand Total
                                 </th> */}
                                 <th scope="col" className="relative px-6 py-3">
-                                <span className="sr-only">View Invoices</span>
+                                <span className="sr-only"></span>
                                 </th>
                                 <th scope="col" className="relative px-6 py-3">
-                                    <button onClick={()=>history.push('/newcustomer')} value="button" class="px-4 py-2 rounded bg-blue-400 text-white hover:bg-blue-700 my-4 w-full" id="whoobe-ibemp">Add Customer</button>
-                                <span className="sr-only">Edit</span>
+                                    <button onClick={()=>history.push('/newcustomer')} value="button" class="px-4 py-2 rounded bg-blue-400 text-white hover:bg-blue-700 my-4 w-half" id="whoobe-ibemp">Add Customer</button>
+                                <span className="sr-only"></span>
                                 </th>
                             </tr>
                             </thead>
@@ -67,27 +68,32 @@ export default function Customers({user}){
                                 <tr key={customer.id}>
                 
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-left text-sm font-medium text-gray-900">{customer.customer_name}</div>
-                                    <div className="text-left text-sm text-gray-500">{customer.address}</div>
+                                    <div className="text-left text-sm font-medium text-gray-600">{customer.customer_name}</div>
+                                    <div className="text-left text-sm text-gray-400">{customer.address}</div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-left text-sm text-gray-900">{customer.phone}</div>
+                                    <div className="text-left text-sm font-medium text-gray-600">{customer.phone}</div>
                                 </td>
                                 <td className="text-left px-6 py-4 whitespace-nowrap">
-                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    <div className="text-left text-sm text-gray-500">{customer.balance}</div>
+                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-green-800">
+                                    <div className="text-left text-sm text-gray-600">${customer.balance}</div>
                                     </span>
                                 </td>
                                 {/* <td className="text-left px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.grand_total}</td> */}
-                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                    <button href="#" className="text-indigo-600 hover:text-indigo-900">
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-semibold">
+                                    <button onClick={()=>history.push({pathname: '/customerinfo',
+                                                                        state: customer})} 
+                                    type="button" className="text-indigo-600 hover:text-indigo-900 font-semibold">
+                                        
                                     Edit
-                                    </button>
+                                    </button>  
+
+
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-semibold">
                                     <button  onClick={()=>history.push({pathname: `/customerinvoices/${customer.id}`,
                                                                         state: customer.id
-                                                                        })}  className="text-indigo-600 hover:text-indigo-900">
+                                                                        })}  className="text-indigo-600 hover:text-indigo-900 font-semibold">
                                     View Invoices
                                     </button>
                                 </td>

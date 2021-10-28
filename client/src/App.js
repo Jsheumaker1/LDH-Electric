@@ -8,6 +8,7 @@ import Home from "./components/Home"
 import Account from "./components/Account"
 import NewCustomer from "./components/NewCustomer"
 import NavBar from "./components/NavBar"
+import CustomerInfo from './components/CustomerInfo';
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
             <Route path='/account' component={() =><Account login = {setLogin} user={user} setUser={setUser}/>}/>
             <Route path='/newcustomer' component={() =><NewCustomer login = {setLogin} user={user} />}/>
             <Route path='/customerinvoices' component={()=><CustomerInvoices  login = {setLogin} user={user}  />}/>
+            <Route path='/customerinfo' component={()=><CustomerInfo/>}/>
             <Route path='/' component={()=><Login login = {setLogin} setUser={setUser}/>} />
           </Switch>
         </div>

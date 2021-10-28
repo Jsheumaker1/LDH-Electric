@@ -5,9 +5,9 @@ class CreateInvoices < ActiveRecord::Migration[6.1]
       t.integer :invoice_number
       t.string :date
       t.text :description
-      t.integer :subtotal
-      t.integer :tax
-      t.integer :grand_total
+      t.float :subtotal
+      t.float :tax
+      t.float :grand_total
       t.boolean :payment_status
       t.string :payment_type
       t.string :payment_number

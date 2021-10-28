@@ -5,7 +5,7 @@ class CreateCustomers < ActiveRecord::Migration[6.1]
       t.string :customer_name
       t.string :phone
       t.string :address
-      t.integer :balance
+      t.float :balance
 
       t.timestamps
     end

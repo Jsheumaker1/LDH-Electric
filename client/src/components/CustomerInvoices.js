@@ -18,6 +18,8 @@ export default function CustomerInvoices({user, login}){
     const customer = location.state
     const history = useHistory()
 
+    console.log(customer)
+
     const currentUser = {
         name: user.name,
         }
@@ -233,7 +235,7 @@ export default function CustomerInvoices({user, login}){
             <div className="px-4 pt-5 sm:px-6">
                 <h3 className="text-lg font-medium leading-6 text-gray-900 bg-white shadow overflow-hidden sm:rounded-lg p-5">Invoices</h3>
             </div>
-                <div className="px-4 py-5 sm:px-6 justify-items-end">
+                <div className="px-4 py-5 sm:px-6 grid-cols-2 place-items-end">
                     <button  type="submit" className="group relative flex justify-center py-2 px-10 border-10 border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span className="inset-y-0 flex items-center pl-3">
                         <PlusIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
@@ -266,31 +268,31 @@ export default function CustomerInvoices({user, login}){
                                         <tr>
                                             <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-sm font-medium text-gray-900 uppercase tracking-wider"
                                             >
-                                            Invoice 
+                                            Invoice
                                             </th>
                                             <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-sm font-medium text-gray-900 uppercase tracking-wider"
                                             >
                                             Description
                                             </th>
                                             <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-sm font-medium text-gray-900 uppercase tracking-wider"
                                             >
                                             Grand Total
                                             </th>
                                             <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-sm font-medium text-gray-900 uppercase tracking-wider"
                                             >
                                             Payment Status
                                             </th>
                                             <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-sm font-medium text-gray-900 uppercase tracking-wider"
                                             >
                                             Payment Details
                                             </th>
@@ -308,28 +310,30 @@ export default function CustomerInvoices({user, login}){
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                    <div className="h-10 w-10 rounded-full">{invoice.invoice_number}<div/>
+                                                    <div className="h-10 w-10 rounded-full text-gray-800 ">{invoice.invoice_number}<div/>
                                                 </div>                                    
                                             </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900 text-left">{invoice.date}</div>
-                                            <div className="text-sm text-gray-500 text-left">{invoice.description}</div>
+                                            <div className="text-sm text-gray-600 font-medium text-left">{invoice.date}</div>
+                                            <div className="text-sm text-gray-400 text-left">{invoice.description}</div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">${invoice.grand_total}</div>                            
+                                        <td className="text-left px-6 py-4 whitespace-nowrap">
+                                            <span className="text-left px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-green-800">
+                                            <div className="text-left text-sm text-gray-600">${invoice.grand_total}</div> 
+                                            </span>                           
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        <td className="px-6 py-4 whitespace-nowrap text-left">
+                                            <span className="text-left px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                 {invoice.payment_status ? "Paid" : "Unpaid"}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">{invoice.payment_type}</div>
-                                            <div className="text-sm text-gray-500">Receipt: {invoice.payment_number}</div>
+                                        <td className="px-6 py-4 whitespace-nowrap text-left">
+                                            <div className="text-left text-xs text-gray-500 font-semibold">Type: {invoice.payment_type}</div>
+                                            <div className="text-left text-xs text-gray-500 font-semibold">Receipt Number: {invoice.payment_number}</div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
                                             Edit
                                             </a>                                    

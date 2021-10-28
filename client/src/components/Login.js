@@ -43,8 +43,8 @@ export default function Login({login, setUser}) {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <div className="mx-auto h-10 text-4xl w-auto" >💡</div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Welcome, please sign in!</h2>
+          <div className="mx-auto h-10 text-4xl w-auto" ></div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">💡 LDH Electric 💡</h2>
         </div>
           <form className="mt-8 space-y-6">
             <input type="hidden" name="remember" defaultValue="true" />

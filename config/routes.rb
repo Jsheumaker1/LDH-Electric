@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   patch 'users/:id', to: 'users#update'
   get '/invoices/:id', to: 'invoices#customer_invoices'
   post '/customers', to: 'customers#create'
+  patch 'customers/:id', to: 'customers#update'
+  delete '/customers/:id', to: 'customers#destroy'
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # get "/hello", to: "application#hello_world"

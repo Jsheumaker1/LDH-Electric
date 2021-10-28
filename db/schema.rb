@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_10_14_190554) do
     t.string "customer_name"
     t.string "phone"
     t.string "address"
-    t.integer "balance"
+    t.float "balance"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_customers_on_user_id"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2021_10_14_190554) do
   create_table "invoice_materials", force: :cascade do |t|
     t.bigint "invoice_id", null: false
     t.bigint "material_id", null: false
-    t.integer "quantity"
-    t.integer "total"
+    t.float "quantity"
+    t.float "total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["invoice_id"], name: "index_invoice_materials_on_invoice_id"
@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 2021_10_14_190554) do
     t.integer "invoice_number"
     t.string "date"
     t.text "description"
-    t.integer "subtotal"
-    t.integer "tax"
-    t.integer "grand_total"
+    t.float "subtotal"
+    t.float "tax"
+    t.float "grand_total"
     t.boolean "payment_status"
     t.string "payment_type"
     t.string "payment_number"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2021_10_14_190554) do
 
   create_table "materials", force: :cascade do |t|
     t.string "item"
-    t.integer "price"
-    t.integer "inventory_quantity"
+    t.float "price"
+    t.float "inventory_quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
